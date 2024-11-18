@@ -9,20 +9,27 @@ batch_size=24
 d_model=32
 d_ff=128
 
+seq_len=96
+
 comment='TimeLLM-ETTm2'
+
+for pred_len in 24 36 48 96 192
+do
+
+model_id=ETTm2_${seq_len}_${pred_len}
 
 accelerate launch --multi_gpu --mixed_precision bf16 --num_processes $num_process --main_process_port $master_port run_main.py \
   --task_name long_term_forecast \
   --is_training 1 \
   --root_path ./dataset/ETT-small/ \
   --data_path ETTm2.csv \
-  --model_id ETTm2_512_96 \
+  --model_id $model_id \
   --model $model_name \
   --data ETTm2 \
   --features M \
-  --seq_len 512 \
-  --label_len 48 \
-  --pred_len 96 \
+  --seq_len $seq_len \
+  --label_len 0 \
+  --pred_len $pred_len \
   --factor 3 \
   --enc_in 7 \
   --dec_in 7 \
@@ -35,90 +42,7 @@ accelerate launch --multi_gpu --mixed_precision bf16 --num_processes $num_proces
   --learning_rate $learning_rate \
   --llm_layers $llama_layers \
   --train_epochs $train_epochs \
-  --model_comment $comment
+  --model_comment $comment \
+  2>&1 | tee -a logs/$model_id.log
 
-accelerate launch --multi_gpu --mixed_precision bf16 --num_processes $num_process --main_process_port $master_port run_main.py \
-  --task_name long_term_forecast \
-  --is_training 1 \
-  --root_path ./dataset/ETT-small/ \
-  --data_path ETTm2.csv \
-  --model_id ETTm2_512_192 \
-  --model $model_name \
-  --data ETTm2 \
-  --features M \
-  --seq_len 512 \
-  --label_len 48 \
-  --pred_len 192 \
-  --factor 3 \
-  --enc_in 7 \
-  --dec_in 7 \
-  --c_out 7 \
-  --des 'Exp' \
-  --itr 1 \
-  --d_model $d_model \
-  --d_ff $d_ff \
-  --batch_size $batch_size \
-  --learning_rate $learning_rate \
-  --lradj 'TST'\
-  --learning_rate 0.002 \
-  --llm_layers $llama_layers \
-  --train_epochs $train_epochs \
-  --model_comment $comment
-
-accelerate launch --multi_gpu --mixed_precision bf16 --num_processes $num_process --main_process_port $master_port run_main.py \
-  --task_name long_term_forecast \
-  --is_training 1 \
-  --root_path ./dataset/ETT-small/ \
-  --data_path ETTm2.csv \
-  --model_id ETTm2_512_336 \
-  --model $model_name \
-  --data ETTm2 \
-  --features M \
-  --seq_len 512 \
-  --label_len 48 \
-  --pred_len 336 \
-  --factor 3 \
-  --enc_in 7 \
-  --dec_in 7 \
-  --c_out 7 \
-  --des 'Exp' \
-  --itr 1 \
-  --d_model $d_model \
-  --d_ff $d_ff \
-  --batch_size $batch_size \
-  --learning_rate $learning_rate \
-  --lradj 'TST'\
-  --learning_rate 0.002 \
-  --llm_layers $llama_layers \
-  --train_epochs $train_epochs \
-  --model_comment $comment
-
-accelerate launch --multi_gpu --mixed_precision bf16 --num_processes $num_process --main_process_port $master_port run_main.py \
-  --task_name long_term_forecast \
-  --is_training 1 \
-  --root_path ./dataset/ETT-small/ \
-  --data_path ETTm2.csv \
-  --model_id ETTm2_512_720 \
-  --model $model_name \
-  --data ETTm2 \
-  --features M \
-  --seq_len 512 \
-  --label_len 48 \
-  --pred_len 720 \
-  --factor 3 \
-  --enc_in 7 \
-  --dec_in 7 \
-  --c_out 7 \
-  --des 'Exp' \
-  --itr 1 \
-  --d_model $d_model \
-  --d_ff $d_ff \
-  --batch_size $batch_size \
-  --learning_rate $learning_rate \
-  --lradj 'TST'\
-  --learning_rate 0.002 \
-  --llm_layers $llama_layers \
-  --train_epochs $train_epochs \
-  --model_comment $comment
-
-
+done
