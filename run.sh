@@ -1,7 +1,8 @@
 export CUDA_VISIBLE_DEVICES=6
 
-bash scripts/TimeLLM_ETTh1.sh
-bash scripts/TimeLLM_ETTh2.sh
-bash scripts/TimeLLM_ETTm1.sh
-bash scripts/TimeLLM_ETTm2.sh
-bash scripts/TimeLLM_Weather.sh
+bash scripts/TimeLLM_ETTh1_noacc.sh
+bash scripts/TimeLLM_ETTh2_noacc.sh
+bash scripts/TimeLLM_ETTm1_noacc.sh
+bash scripts/TimeLLM_ETTm2_noacc.sh
+bash scripts/TimeLLM_Exchange_noacc.sh
+bash scripts/TimeLLM_Weather_noacc.sh

@@ -1,0 +1,49 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Python Debugger: run_main.py weather",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/run_main.py",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "args": [
+                "--task_name",
+                "long_term_forecast",
+                "--is_training",
+                "1",
+                "--root_path",
+                "./dataset/weather/",
+                "--data_path",
+                "weather.csv",
+                "--model_id",
+                "weather_DEBUG",
+                "--model",
+                "TimeLLM",
+                "--data",
+                "Weather",
+                "--features",
+                "M",
+                "--seq_len",
+                "96",
+                "--label_len",
+                "0",
+                "--pred_len",
+                "24",
+                "--model_comment",
+                "TimeLLM-Weather",
+            ],
+        },
+    ]
+}
