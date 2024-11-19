@@ -3,7 +3,7 @@ train_epochs=10
 learning_rate=0.01
 llama_layers=32
 
-batch_size=8
+batch_size=16
 d_model=32
 d_ff=128
 
@@ -23,7 +23,7 @@ python run_main.py \
   --data_path exchange_rate.csv \
   --model_id $model_id \
   --model $model_name \
-  --data exchange \
+  --data Exchange \
   --features M \
   --seq_len $seq_len \
   --label_len 0 \
@@ -40,5 +40,6 @@ python run_main.py \
   --learning_rate $learning_rate \
   --llm_layers $llama_layers \
   --train_epochs $train_epochs \
-  --model_comment $comment
+  --model_comment $comment \
+  2>&1 | tee -a logs/$model_id.log
 done
