@@ -168,7 +168,7 @@ for ii in range(args.itr):
         train_loader, vali_loader, test_loader, model, model_optim, scheduler)
 
     if args.use_amp:
-        scaler = torch.cuda.amp.GradScaler()
+        scaler = torch.amp.GradScaler()
 
     for epoch in range(args.train_epochs):
         iter_count = 0

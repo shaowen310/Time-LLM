@@ -1,9 +1,9 @@
 model_name=TimeLLM
-train_epochs=100
+train_epochs=10
 learning_rate=0.01
 llama_layers=32
 
-batch_size=24
+batch_size=8
 d_model=32
 d_ff=128
 
