@@ -42,7 +42,7 @@ class Model(nn.Module):
 
         if configs.llm_model == 'LLAMA':
             self.llama_config = LlamaConfig.from_pretrained('huggyllama/llama-7b')
-            # self.llama_config = LlamaConfig.from_pretrained('./llama-dl/')
+
             self.llama_config.num_hidden_layers = configs.llm_layers
             self.llama_config.output_attentions = True
             self.llama_config.output_hidden_states = True
