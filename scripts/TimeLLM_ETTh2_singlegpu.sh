@@ -3,27 +3,27 @@ train_epochs=10
 learning_rate=0.01
 llama_layers=32
 
-batch_size=16
+batch_size=8
 d_model=32
 d_ff=128
 
 seq_len=96
 
-comment='TimeLLM-ETTh1'
+comment='TimeLLM-ETTh2'
 
 for pred_len in 24 36 48 96 192
 do
 
-model_id=ETTh1_${seq_len}_${pred_len}
+model_id=ETTh2_${seq_len}_${pred_len}
 
-python run_main.py \
+accelerate launch --mixed_precision bf16 --num_processes 1 --num_machines 1 --dynamo_backend no run_main.py \
   --task_name long_term_forecast \
   --is_training 1 \
   --root_path ./dataset/ETT-small/ \
-  --data_path ETTh1.csv \
+  --data_path ETTh2.csv \
   --model_id $model_id \
   --model $model_name \
-  --data ETTh1 \
+  --data ETTh2 \
   --features M \
   --seq_len $seq_len \
   --label_len 0 \
