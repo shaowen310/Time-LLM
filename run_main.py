@@ -14,12 +14,21 @@ import random
 import numpy as np
 import os
 
-os.environ['CURL_CA_BUNDLE'] = ''
+
+def param_num(self):
+    return sum([param.nelement() for param in self.parameters()])
+
+
+def count_trainable_params(self):
+    return sum(p.numel() for p in self.parameters() if p.requires_grad)
+
+
+os.environ["CURL_CA_BUNDLE"] = ""
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:64"
 
 from utils.tools import del_files, EarlyStopping, adjust_learning_rate, vali, load_content
 
-parser = argparse.ArgumentParser(description='Time-LLM')
+parser = argparse.ArgumentParser(description="Time-LLM")
 
 fix_seed = 2021
 random.seed(fix_seed)
@@ -133,9 +142,12 @@ for ii in range(args.itr):
         model = DLinear.Model(args).float()
     else:
         model = TimeLLM.Model(args).float()
+        
+    print("The number of parameters: {}".format(param_num(model)))
+    print("The number of trainable parameters: {}".format(count_trainable_params(model)))
 
-    path = os.path.join(args.checkpoints,
-                        setting + '-' + args.model_comment)  # unique checkpoint saving path
+    # unique checkpoint saving path
+    path = os.path.join(args.checkpoints, setting + "-" + args.model_comment)
     args.content = load_content(args)
     if not os.path.exists(path) and accelerator.is_local_main_process:
         os.makedirs(path)
